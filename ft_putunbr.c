@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 12:26:13 by ekose             #+#    #+#             */
-/*   Updated: 2023/10/29 14:00:57 by ekose            ###   ########.fr       */
+/*   Updated: 2023/11/02 13:09:56 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 void	ft_putunbr(unsigned int n, unsigned int *len)
 {
-	char	rs;
-
 	if (n > 9)
 	{
 		ft_putunbr(n / 10, len);
-		rs = (n % 10) + '0';
-		ft_putchar(rs, len);
+		ft_putchar((n % 10) + '0', len);
 	}
 	else
-	{
-		rs = n % 10 + '0';
-		ft_putchar(rs, len);
-	}
+		ft_putchar(n % 10 + '0', len);
 }

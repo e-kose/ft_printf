@@ -6,17 +6,16 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 12:02:46 by ekose             #+#    #+#             */
-/*   Updated: 2023/10/29 14:47:38 by ekose            ###   ########.fr       */
+/*   Updated: 2023/11/02 13:19:44 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 void	ft_check(va_list args, const char *str, unsigned int *len)
 {
 	if (*str == 'c')
-		len += write(1, &str, 1);
+		ft_putchar(va_arg(args, int), len);
 	else if (*str == 's')
 		ft_putstr(va_arg(args, const char *), len);
 	else if (*str == 'd' || *str == 'i')
@@ -27,9 +26,13 @@ void	ft_check(va_list args, const char *str, unsigned int *len)
 		ft_puthexa(va_arg(args, unsigned int), len, str);
 	else if (*str == 'p')
 	{
-		len += write(1, "0X", 2);
+		*(len) += write(1, "0x", 2);
 		ft_phexa(va_arg(args, unsigned long), len);
 	}
+	else if (*str == '%')
+		*len += write(1, "%", 1);
+	else
+		*len += write(1, str, 1);
 }
 
 int	ft_printf(const char *format, ...)
@@ -38,32 +41,21 @@ int	ft_printf(const char *format, ...)
 	unsigned int	i;
 	va_list			argumans;
 
-	if (format == NULL)
-		return (0);
 	va_start(argumans, format);
 	i = 0;
 	len = 0;
 	while (format[i])
 	{
-		if (format[i] == '%')
+		if (format[i] == '%' && format[i + 1])
 		{
-			if (format[i + 1] == '%')
-				len += write(1, "%", 1);
-			else
-				ft_check(argumans, &format[i + 1], &len);
+			ft_check(argumans, &format[i + 1], &len);
 			i++;
 		}
 		else
-			len += write(1, &format[i], 1);
+			if (format[i] != '%')
+				ft_putchar(format[i], &len);
 		i++;
 	}
 	va_end(argumans);
 	return (len);
-}
-int main()
-{
-	char a = 'a';
-	// ft_printf("Lai %d %s %p %c",a,"ayse",&a,'a');
-	// printf("\nLai %d %s %p %c",a,"ayse",&a,'a');
-	ft_printf("%c",a);
 }

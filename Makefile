@@ -13,9 +13,14 @@ all: $(NAME)
 
 $(NAME) : $(OBJECT)
 	$(AR) -r $(NAME) $(OBJECT)
-
-bonus : $(OBJECT) $(BOBJECT)
-	$(AR) -r $(NAME) $(OBJECT) $(BOBJECT)
+	@echo "\033[33m  __ _                  _       _    __"
+	@echo " / _| |                (_)     | |  / _|"
+	@echo "| |_| |_     _ __  _ __ _ _ __ | |_| |_"
+	@echo "|  _| __|   | '_ \| '__| | '_ \| __|  _|"
+	@echo "| | | |_    | |_) | |  | | | | | |_| |"
+	@echo "|_|  \__|   | .__/|_|  |_|_| |_|\__|_|"
+	@echo "    ______| |"
+	@echo "   |______|_\033[0m"
 
 clean :
 	rm -rf $(OBJECT) $(BOBJECT)
